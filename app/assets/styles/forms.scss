@@ -1,0 +1,33 @@
+// Inputs
+input {
+  border: solid 1px #fff;
+}
+
+// Buttons
+button {
+  border: none;
+}
+
+// Labels
+label {
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+div.input-group {
+  display: inline-block;
+  line-height: 1em;
+
+  &.login {
+    vertical-align: middle;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  input {
+    display: block;
+  }
+}

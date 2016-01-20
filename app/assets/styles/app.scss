@@ -1,5 +1,62 @@
+// Normalize
+@import '~normalize.css';
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,300,200,600,700);
+
+// Variables
+@import './variables';
+
+// Mixins
+@import './mixins';
+
+// Forms
+@import './forms';
+
+// Main Styling
+body {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: $base-font-size;
+  margin: 0;
+}
+
 div.container {
-  width: 80%;
-  margin-left: 20%;
-  font-size: 4em;
+  width: 100%;
+  color: #fff;
+}
+
+// Home Page
+div.home {
+
+}
+
+// Navigation
+nav.login-nav {
+  @include linearGradient($light-blue, $medium-blue);
+  height: 80px;
+  padding: 0 10%;
+
+  h1.logo {
+    font-size: 2em;
+    float: left;
+  }
+
+  form.login-form {
+    display: inline-block;
+    float: right;
+    line-height: 80px;
+
+    input {
+      margin-right: 8px;
+    }
+
+    button {
+      line-height: 1.3em;
+      background-color: rgb(107, 133, 180);
+      border: solid 1px #000;
+      font-weight: 600;
+      margin-top: 17px;
+      vertical-align: middle;
+    }
+  }
 }
