@@ -60,3 +60,35 @@ nav.login-nav {
     }
   }
 }
+
+// Registration
+div.registration {
+  width: 50%;
+  margin-left: 50%;
+}
+
+form.registration-form {
+  .input-group {
+    display: block;
+
+    &.half {
+      display: inline-block;
+      width: 40%;
+    }
+  }
+
+  input {
+    width: 50%;
+    border: solid 1px grey;
+    padding: 5px;
+    font-size: 1.3em;
+    border-radius: 4px;
+  }
+
+  button {
+    border-radius: 4px;
+    background-color: green;
+    padding: 5px 15px;
+    font-size: 1.5em;
+  }
+}

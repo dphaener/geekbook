@@ -1,0 +1,4 @@
+--full-trace
+--harmony-proxies
+--compilers js:babel-core/register
+--recursive test/**/*.js
