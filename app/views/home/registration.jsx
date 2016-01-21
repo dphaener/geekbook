@@ -6,6 +6,8 @@ export default class Registration extends React.Component {
     return (
       <div className='registration'>
         <form className='registration-form'>
+          <h1>Sign Up</h1>
+          <p>It's free!</p>
           <div className='input-group half'>
             <input type='text' name='first_name' placeholder='First Name' />
           </div>

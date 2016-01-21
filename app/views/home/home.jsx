@@ -10,7 +10,14 @@ export default class Home extends React.Component {
     return (
       <div className='home'>
         <Login />
-        <Registration />
+        <div className='main-content'>
+          <div className='copy'>
+            <h1>Connect with other geeks!</h1>
+            <p>Check out their code!</p>
+            <p>Do other cool stuff!</p>
+          </div>
+          <Registration />
+        </div>
       </div>
     )
   }
