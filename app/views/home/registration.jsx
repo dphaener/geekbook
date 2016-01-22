@@ -4,6 +4,7 @@ import React from 'react'
 // Local Libraries
 import Input from '~/app/views/shared/input'
 import TextInput from '~/app/views/shared/text_input'
+import EmailInput from '~/app/views/shared/email_input'
 
 export default class Registration extends React.Component {
   render() {
@@ -16,18 +17,24 @@ export default class Registration extends React.Component {
             name='first_name'
             className='input-group half'
             placeholder='First Name'
+            errorMessage='First name is required'
+            required
           />
-          <Input
+          <TextInput
             name='last_name'
             className='input-group half'
             placeholder='Last Name'
+            errorMessage='Last name is required'
+            required
           />
-          <Input
+          <EmailInput
             name='email'
             type='email'
+            errorMessage='A valid email is required'
             placeholder='Email'
+            required
           />
-          <Input
+          <EmailInput
             name='email_confirm'
             type='email'
             placeholder='Confirm Email'

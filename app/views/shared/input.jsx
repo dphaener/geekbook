@@ -11,15 +11,24 @@ export default class Input extends React.Component {
 
   static defaultProps = {
     className: 'input-group',
-    required: false
+    required: false,
+    errorMessage: 'This is required'
   };
 
+  constructor(props) {
+    super(props)
+
+    this.state = { valid: true }
+  }
+
   render() {
-    const { className, ...rest } = this.props
+    const { className, errorMessage, ...rest } = this.props,
+          { valid } = this.state
 
     return (
       <div className={className}>
-        <input {...rest} />
+        <input {...rest} onBlur={this.validate} />
+        { valid ? null : <div>{errorMessage}</div> }
       </div>
     )
   }
