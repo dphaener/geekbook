@@ -1,6 +1,10 @@
 // Vendor Libraries
 import React from 'react'
 
+// Local Libraries
+import Input from '~/app/views/shared/input'
+import TextInput from '~/app/views/shared/text_input'
+
 export default class Registration extends React.Component {
   render() {
     return (
@@ -8,21 +12,31 @@ export default class Registration extends React.Component {
         <form className='registration-form'>
           <h1>Sign Up</h1>
           <p>It's free!</p>
-          <div className='input-group half'>
-            <input type='text' name='first_name' placeholder='First Name' />
-          </div>
-          <div className='input-group half'>
-            <input type='text' name='last_name' placeholder='Last Name' />
-          </div>
-          <div className='input-group'>
-            <input type='email' name='email' placeholder='Email' />
-          </div>
-          <div className='input-group'>
-            <input type='email' name='email_confirm' placeholder='Confirm Email' />
-          </div>
-          <div className='input-group'>
-            <input type='password' name='password' placeholder='Password' />
-          </div>
+          <TextInput
+            name='first_name'
+            className='input-group half'
+            placeholder='First Name'
+          />
+          <Input
+            name='last_name'
+            className='input-group half'
+            placeholder='Last Name'
+          />
+          <Input
+            name='email'
+            type='email'
+            placeholder='Email'
+          />
+          <Input
+            name='email_confirm'
+            type='email'
+            placeholder='Confirm Email'
+          />
+          <Input
+            name='password'
+            type='password'
+            placeholder='Password'
+          />
           <button type='submit'>Sign Up</button>
         </form>
       </div>
