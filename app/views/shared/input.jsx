@@ -27,7 +27,7 @@ export default class Input extends React.Component {
 
     return (
       <div className={className}>
-        <input {...rest} onBlur={this.validate} />
+        <input ref='input' {...rest} onBlur={this.validate} />
         { valid ? null : <div>{errorMessage}</div> }
       </div>
     )
