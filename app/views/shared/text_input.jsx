@@ -12,3 +12,4 @@ export default class TextInput extends Input {
     return event.target.value != ''
   }
 }
+

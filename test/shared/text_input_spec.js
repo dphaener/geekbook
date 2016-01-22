@@ -5,10 +5,15 @@ import TextInput from '~/app/views/shared/text_input'
 
 describe('TextInput', () => {
   describe('validate', () => {
+    let input
+
+    beforeEach(() => {
+      input = new TextInput({ required: true })
+    })
+
     context('when the value is empty', () => {
       it('should return false', () => {
-        let input = new TextInput({ required: true }),
-            event = { target: { value: '' } }
+        let event = { target: { value: '' } }
 
         expect(input.validate(event)).to.be.false
       })
@@ -16,8 +21,7 @@ describe('TextInput', () => {
 
     context('when the value is not empty', () => {
       it('should return true', () => {
-        let input = new TextInput({ required: true }),
-            event = { target: { value: 'foo' } }
+        let event = { target: { value: 'foo' } }
 
         expect(input.validate(event)).to.be.true
       })
