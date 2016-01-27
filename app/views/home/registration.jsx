@@ -13,21 +13,19 @@ class Registration extends React.Component {
     last_name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     email_confirm: PropTypes.string.isRequired,
+    email_confirm_valid: PropTypes.bool.isRequired,
     password: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired
   };
 
   submitForm(event) {
     event.preventDefault()
+    const { email, email_confirm, first_name, last_name, password } = this.props
 
-    const { email, emailConfirm } = this.refs
-
-    if (this.props.email === this.props.email_confirm) {
-      alert("Yay")
-    } else {
-      alert("Boo")
+    if (email === email_confirm) {
+      alert("The form is valid, do something")
     }
-  };
+  }
 
   valueChanged(ev) {
     const { name, value } = ev.target
@@ -35,7 +33,7 @@ class Registration extends React.Component {
   }
 
   render() {
-    const { first_name, last_name, email, email_confirm, password } = this.props
+    const { email_confirm_valid, first_name, last_name, email, email_confirm, password } = this.props
 
     return (
       <div className='registration'>
@@ -76,6 +74,7 @@ class Registration extends React.Component {
             name='email_confirm'
             onChange={::this.valueChanged}
             value={email_confirm}
+            validation={() => email === email_confirm}
             errorMessage='Emails must match'
             placeholder='Confirm Email'
             required

@@ -6,13 +6,13 @@ export default class Input extends React.Component {
     type: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     name: React.PropTypes.string.isRequired,
-    required: React.PropTypes.bool
+    required: React.PropTypes.bool,
   };
 
   static defaultProps = {
     className: 'input-group',
     required: false,
-    errorMessage: 'This is required'
+    errorMessage: 'This is required',
   };
 
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Input extends React.Component {
 
     return (
       <div className={className}>
-        <input ref='input' {...rest} onBlur={this.validate} />
+        <input ref='input' onBlur={this.validate} {...rest} />
         { valid ? null : <div>{errorMessage}</div> }
       </div>
     )

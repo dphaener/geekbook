@@ -9,6 +9,15 @@ export default class EmailInput extends Input {
 
   validate = (event) => {
     if (!this.props.required) return true
-    this.setState({ valid: !!event.target.value.match(/^[^@]+@[^@]+\.[^@]+$/) })
+
+    let valid
+
+    if (this.props.validation) {
+      valid = this.props.validation()
+    } else {
+      valid = !!event.target.value.match(/^[^@]+@[^@]+\.[^@]+$/)
+    }
+
+    this.setState({ valid: valid })
   };
 }
