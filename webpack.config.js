@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
   entry: {
@@ -17,7 +18,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.scss'],
-    modulesDirectories: ['node_modules']
+    modulesDirectories: ['node_modules'],
+    alias: {
+      react: path.resolve('./node_modules/react'),
+    }
   },
   module: {
     loaders: [

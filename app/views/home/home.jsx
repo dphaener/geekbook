@@ -7,6 +7,8 @@ import Registration from './registration'
 
 export default class Home extends React.Component {
   render() {
+    const { history } = this.props
+
     return (
       <div className='home'>
         <Login />
@@ -16,7 +18,7 @@ export default class Home extends React.Component {
             <p>Check out their code!</p>
             <p>Do other cool stuff!</p>
           </div>
-          <Registration />
+          <Registration history={history} />
         </div>
       </div>
     )

@@ -1,6 +1,8 @@
 // Vendor Libraries
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import 'whatwg-fetch'
+import jwt from 'jsonwebtoken'
 
 // Local Libraries
 import TextInput from '~/app/views/shared/text_input'
@@ -15,7 +17,8 @@ class Registration extends React.Component {
     email_confirm: PropTypes.string.isRequired,
     email_confirm_valid: PropTypes.bool.isRequired,
     password: PropTypes.string.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
   };
 
   submitForm(event) {
@@ -23,9 +26,20 @@ class Registration extends React.Component {
     const { email, email_confirm, first_name, last_name, password } = this.props
 
     if (email === email_confirm) {
-      alert("The form is valid, do something")
+      fetch('https://geekbook-be.herokuapp.com/new_user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
+        body: JSON.stringify({ email, first_name, last_name, password })
+      }).then(response => response.json()).then(response => ::this.login(response))
     }
   }
+
+  login(response) {
+    localStorage.setItem('geekbook_user', response.user)
+    let user = jwt.decode(response.user)
+    this.props.history.replaceState(null, `/${user.user.token}`)
+  }
+
 
   valueChanged(ev) {
     const { name, value } = ev.target
