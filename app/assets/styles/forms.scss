@@ -8,6 +8,11 @@ input {
 button {
   color: #fff;
   border: none;
+
+  &:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+  }
 }
 
 // Labels

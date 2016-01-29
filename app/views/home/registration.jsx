@@ -1,13 +1,15 @@
 // Vendor Libraries
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import 'whatwg-fetch'
 import jwt from 'jsonwebtoken'
 
 // Local Libraries
 import TextInput from '~/app/views/shared/text_input'
 import EmailInput from '~/app/views/shared/email_input'
 import PasswordInput from '~/app/views/shared/password_input'
+
+// Actions
+import { updateFormValue, createUser } from '~/app/actions'
 
 class Registration extends React.Component {
   static propTypes = {
@@ -26,11 +28,7 @@ class Registration extends React.Component {
     const { email, email_confirm, first_name, last_name, password } = this.props
 
     if (email === email_confirm) {
-      fetch('https://geekbook-be.herokuapp.com/new_user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
-        body: JSON.stringify({ email, first_name, last_name, password })
-      }).then(response => response.json()).then(response => ::this.login(response))
+      this.props.dispatch(createUser(email, first_name, last_name, password))
     }
   }
 
@@ -43,11 +41,11 @@ class Registration extends React.Component {
 
   valueChanged(ev) {
     const { name, value } = ev.target
-    this.props.dispatch({ type: 'updateFormValue', name, value })
+    this.props.dispatch(updateFormValue(name, value))
   }
 
   render() {
-    const { email_confirm_valid, first_name, last_name, email, email_confirm, password } = this.props
+    const { disabled, email_confirm_valid, first_name, last_name, email, email_confirm, password } = this.props
 
     return (
       <div className='registration'>
@@ -102,11 +100,11 @@ class Registration extends React.Component {
             errorMessage='Password must be at least 6 characters'
             required
           />
-          <button type='submit'>Sign Up</button>
+          <button type='submit' disabled={disabled}>Sign Up</button>
         </form>
       </div>
     )
   };
 }
 
-export default connect(state => state)(Registration)
+export default connect(state => state.registration)(Registration)

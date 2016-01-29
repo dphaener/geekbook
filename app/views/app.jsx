@@ -3,7 +3,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, IndexRoute, Route, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { syncHistory, routeReducer } from 'react-router-redux'
 
 // Components
 import Home from './home/home'
@@ -13,9 +14,25 @@ import Feed from './feed/feed'
 import '~/app/assets/styles/app'
 
 // Reducer
-import reducer from '~/app/reducers'
+import reducers from '~/app/reducers'
 
-const store = createStore(reducer)
+// Redux Middleware
+import promiseMiddleware from '~/app/flux/promise_middleware'
+
+// Combine our reducer with the react-redux reducer
+const reducer = combineReducers({ routing: routeReducer, registration: reducers })
+
+// Create the react-router-redux middleware
+const reduxRouterMiddleware = syncHistory(browserHistory)
+
+// Inject the middleware
+const createStoreWithMiddleware = applyMiddleware(
+  promiseMiddleware,
+  reduxRouterMiddleware
+)(createStore)
+
+// Create the store
+const store = createStoreWithMiddleware(reducer)
 
 class App extends React.Component {
   render() {
