@@ -1,6 +1,7 @@
 // Vendor Libraries
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { routeActions } from 'react-router-redux'
 import jwt from 'jsonwebtoken'
 
 // Local Libraries
@@ -28,16 +29,17 @@ class Registration extends React.Component {
     const { email, email_confirm, first_name, last_name, password } = this.props
 
     if (email === email_confirm) {
-      this.props.dispatch(createUser(email, first_name, last_name, password))
+      this.props.dispatch(
+        createUser(email, first_name, last_name, password)
+      ).then(::this.login)
     }
   }
 
-  login(response) {
-    localStorage.setItem('geekbook_user', response.user)
-    let user = jwt.decode(response.user)
-    this.props.history.replaceState(null, `/${user.user.token}`)
+  login(action) {
+    localStorage.setItem('geekbook_user', action.result.user)
+    let user = jwt.decode(action.result.user)
+    this.props.dispatch(routeActions.push(`/${user.user.token}`))
   }
-
 
   valueChanged(ev) {
     const { name, value } = ev.target

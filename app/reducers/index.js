@@ -17,7 +17,6 @@ export default (state = defaultState, action) => {
     case 'createUser_REQUEST':
       return Object.assign({}, state, { disabled: true })
     case 'createUser':
-      console.log(action.result)
     default:
       return state
   }
