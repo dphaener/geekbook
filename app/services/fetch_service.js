@@ -10,5 +10,14 @@ export function post(url, body) {
     method: 'POST',
     headers,
     body: JSON.stringify(body)
-  }).then(response => response.json())
+  }).then(response => {
+    if (response.status >= 200 && response.status < 300) {
+      return response.json()
+    } else {
+      return response.json().then(result => {
+        let error = result.errors[0].message
+        throw new Error(error)
+      })
+    }
+  })
 }
