@@ -46,11 +46,6 @@ div.home {
         background-color: green;
         padding: 10px 25px;
         font-size: 1.5em;
-
-        &:disabled {
-          background-color: grey;
-          cursor: not-allowed;
-        }
       }
     }
   }
@@ -64,7 +59,7 @@ nav.login-nav {
   color: #fff;
 
   h1.logo {
-    @include span-columns(4 of 12);
+    @include span-columns(2 of 12);
     @include shift(2 of 12);
 
     font-family: 'Titillium Web', sans-serif;
@@ -72,9 +67,17 @@ nav.login-nav {
     float: left;
   }
 
+  div.auth-failed {
+    @include span-columns(2 of 12);
+    @include shift(1 of 12);
+
+    text-align: right;
+    line-height: 80px;
+    height: 80px;
+  }
+
   form.login-form {
     @include span-columns(4 of 12);
-    @include shift(1 of 12);
 
     line-height: 80px;
 
