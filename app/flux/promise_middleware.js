@@ -6,6 +6,7 @@ export default function promiseMiddleware() {
     }
 
     next({ ...rest, type: type+'_REQUEST' })
+
     return promise.then(result => next({ ...rest, result, type: type })).
     catch(ex => {
       next({ ...rest, ex, type: type+'_FAILURE' })
