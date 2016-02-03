@@ -13,8 +13,7 @@ export class Feed extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({userId: 'b71c949d-3d8e-4e33-9630-52213a0e50ef'})
-    return;
+    //this.setState({userId: 'b71c949d-3d8e-4e33-9630-52213a0e50ef'})
     let token = localStorage.geekbook_user
     let user = jwt.decode(token)
     this.setState({ userId: user.user.token })
