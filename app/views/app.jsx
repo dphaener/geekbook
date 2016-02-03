@@ -39,6 +39,7 @@ const store = createStoreWithMiddleware(reducer)
 
 // Authentication
 function authenticate(nextState, replace) {
+  console.log("authenticate", nextState)
   if (!localStorage.getItem('geekbook_user')) {
     replace({ pathname: '/' })
   }
