@@ -27,12 +27,8 @@ export class Feed extends Component {
     this.props.fetchPosts({user: this.state.userId})
   }
 
-  createPost(ev) {
-    ev.preventDefault()
-
-    const content = ev.target[0].value,
-          user_id = this.state.userId
-
+  createPost(content) {
+    const user_id = this.state.userId
     this.props.createPost({ user_id, content })
   }
 
@@ -41,7 +37,7 @@ export class Feed extends Component {
 
     return (
       <div>
-        <NewPost onSubmit={::this.createPost} />
+        <NewPost createPost={::this.createPost} />
         { posts.map(post => <FeedPost user_id={this.state.userId} key={post.id} {...post}/>)}
       </div>
     )

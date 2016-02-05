@@ -14,6 +14,12 @@ export default (state = defaultState, action) => {
       return state.updateIn(['posts'], posts => (
         posts.unshift(post)
       ))
+    case 'addLike':
+      let likedPost = fromJS(action.result.data.likePost)
+      let index = state.get('posts').findIndex(value => {
+        return value.get('id') === likedPost.get('id')
+      })
+      return state.setIn(['posts', index], likedPost)
     default:
       return state
   }

@@ -35,7 +35,8 @@ export function fetchPosts({user}) {
         posts(first: 10) {
           content,
           id,
-          likes
+          likes,
+          user_likes
         }
       }
     }
@@ -48,9 +49,20 @@ export function fetchPosts({user}) {
 }
 
 export function addLike({post_id, user_id}) {
+  let query = `
+    mutation {
+      likePost(id: ${post_id}, user_id: "${user_id}") {
+        likes,
+        id,
+        content,
+        user_likes
+      }
+    }
+  `
+
   return {
     type: 'addLike',
-    post_id, user_id,
+    promise: runQuery({query})
   }
 }
 

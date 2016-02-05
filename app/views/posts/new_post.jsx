@@ -1,10 +1,22 @@
 import React from 'react'
 
-export default function NewPost({onSubmit}) {
-  return (
-    <form onSubmit={onSubmit}>
-      <textarea required name='content'></textarea>
-      <button type='submit'>Post</button>
-    </form>
-  )
+export default class NewPost extends React.Component {
+  static propTypes = {
+    createPost: React.PropTypes.func.isRequired
+  };
+
+  onSubmit(ev) {
+    ev.preventDefault()
+    this.props.createPost(ev.target[0].value)
+    ev.target[0].value = ''
+  }
+
+  render() {
+    return (
+      <form onSubmit={::this.onSubmit}>
+        <textarea required name='content'></textarea>
+        <button type='submit'>Post</button>
+      </form>
+    )
+  }
 }
