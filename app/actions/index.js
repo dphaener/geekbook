@@ -1,4 +1,4 @@
-import { post } from '~/app/services/fetch_service'
+import { post, runQuery } from '~/app/services/fetch_service'
 
 export function updateFormValue(name, value) {
   return {
@@ -43,12 +43,11 @@ export function fetchPosts({user}) {
 
   return {
     type: 'fetchPosts',
-    promise: post('http://geekbook-be.herokuapp.com/queries', {query})
+    promise: runQuery({query})
   };
 }
 
 export function addLike({post_id, user_id}) {
-  console.log("addLike", post_id, user_id)
   return {
     type: 'addLike',
     post_id, user_id,
@@ -59,5 +58,21 @@ export function removeLike({post_id, user_id}) {
   return {
     type: 'removeLike',
     post_id, user_id,
+  }
+}
+
+export function createPost({user_id, content}) {
+  let query = `
+    mutation {
+      createPost(user_id: "${user_id}", content: "${content}") {
+        id,
+        content,
+        likes
+      }
+    }
+  `
+  return {
+    type: 'createPost',
+    promise: runQuery({query})
   }
 }

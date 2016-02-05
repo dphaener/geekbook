@@ -21,3 +21,7 @@ export function post(url, body) {
     }
   })
 }
+
+export function runQuery(body) {
+  return post('http://geekbook-be.herokuapp.com/queries', body)
+}

@@ -29,6 +29,7 @@
     "babel-preset-stage-0": "6.3.13",
     "bourbon": "^4.2.6",
     "bourbon-neat": "^1.7.2",
+    "immutable": "^3.7.6",
     "jsonwebtoken": "^5.5.4",
     "koa": "2.0.0-alpha.3",
     "koa-convert": "1.2.0",

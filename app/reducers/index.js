@@ -2,9 +2,11 @@
 import registration from './registration'
 import login from './login'
 import likes from './likes'
+import feed_posts from './feed_posts'
 
 export default {
   registration,
   login,
-  likes
+  likes,
+  feed_posts
 }
