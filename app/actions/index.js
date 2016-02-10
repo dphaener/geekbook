@@ -1,5 +1,7 @@
 import { post, runQuery } from '~/app/services/fetch_service'
 
+const post_fields = 'content, id, likes, user_likes'
+
 export function updateFormValue(name, value) {
   return {
     type: 'updateFormValue',
@@ -32,12 +34,13 @@ export function fetchPosts({user}) {
   let query = `
     query {
       user(token: "${user}") {
-        posts(first: 10) {
-          content,
-          id,
-          likes,
-          user_likes
-        }
+        user_list {
+          first_name,
+          last_name,
+          email,
+          token
+        },
+        posts(first: 10) { ${post_fields} }
       }
     }
   `;
@@ -48,28 +51,35 @@ export function fetchPosts({user}) {
   };
 }
 
-export function addLike({post_id, user_id}) {
+export function addLike({post, user_id}) {
   let query = `
     mutation {
-      likePost(id: ${post_id}, user_id: "${user_id}") {
-        likes,
-        id,
-        content,
-        user_likes
+      likePost(id: ${post.id}, user_id: "${user_id}") {
+        ${post_fields}
       }
     }
   `
 
   return {
     type: 'addLike',
-    promise: runQuery({query})
+    promise: runQuery({query}),
+    user_id, post
   }
 }
 
-export function removeLike({post_id, user_id}) {
+export function removeLike({post, user_id}) {
+  let query = `
+    mutation {
+      unlikePost(id: ${post.id}, user_id: "${user_id}") {
+        ${post_fields}
+      }
+    }
+  `
+
   return {
     type: 'removeLike',
-    post_id, user_id,
+    promise: runQuery({query}),
+    user_id, post
   }
 }
 
@@ -77,9 +87,7 @@ export function createPost({user_id, content}) {
   let query = `
     mutation {
       createPost(user_id: "${user_id}", content: "${content}") {
-        id,
-        content,
-        likes
+        ${post_fields}
       }
     }
   `

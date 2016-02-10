@@ -5,10 +5,12 @@ import { fetchPosts, createPost } from '~/app/actions'
 import { connect } from 'react-redux'
 import FeedPost from './feed_post';
 import NewPost from '~/app/views/posts/new_post'
+import UserList from '~/app/views/users/list'
 
 export class Feed extends Component {
   static propTypes = {
-    posts: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired,
+    user_list: PropTypes.array.isRequired
   };
 
   constructor(props) {
@@ -33,12 +35,15 @@ export class Feed extends Component {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, user_list } = this.props
 
     return (
-      <div>
-        <NewPost createPost={::this.createPost} />
-        { posts.map(post => <FeedPost user_id={this.state.userId} key={post.id} {...post}/>)}
+      <div className='feed-container'>
+        <div className='feed'>
+          <NewPost createPost={::this.createPost} />
+          { posts.map(post => <FeedPost user_id={this.state.userId} key={post.id} {...post}/>)}
+        </div>
+        <UserList user_list={user_list} />
       </div>
     )
   }

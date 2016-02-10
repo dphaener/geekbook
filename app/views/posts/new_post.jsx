@@ -13,10 +13,12 @@ export default class NewPost extends React.Component {
 
   render() {
     return (
-      <form onSubmit={::this.onSubmit}>
-        <textarea required name='content'></textarea>
-        <button type='submit'>Post</button>
-      </form>
+      <div className='new-post'>
+        <form onSubmit={::this.onSubmit}>
+          <textarea required name='content'></textarea>
+          <button type='submit'>Post</button>
+        </form>
+      </div>
     )
   }
 }
