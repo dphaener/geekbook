@@ -10,7 +10,8 @@ import UserList from '~/app/views/users/list'
 export class Feed extends Component {
   static propTypes = {
     posts: PropTypes.array.isRequired,
-    user_list: PropTypes.array.isRequired
+    user_list: PropTypes.array.isRequired,
+    friends: PropTypes.array.isRequired
   };
 
   constructor(props) {
@@ -35,7 +36,7 @@ export class Feed extends Component {
   }
 
   render() {
-    const { posts, user_list } = this.props
+    const { posts, user_list, friends } = this.props
 
     return (
       <div className='feed-container'>
@@ -43,7 +44,7 @@ export class Feed extends Component {
           <NewPost createPost={::this.createPost} />
           { posts.map(post => <FeedPost user_id={this.state.userId} key={post.id} {...post}/>)}
         </div>
-        <UserList user_list={user_list} />
+        <UserList user_list={user_list} friends={friends} />
       </div>
     )
   }

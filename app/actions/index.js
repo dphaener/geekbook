@@ -40,7 +40,8 @@ export function fetchPosts({user}) {
           email,
           token
         },
-        posts(first: 10) { ${post_fields} }
+        posts(first: 10) { ${post_fields} },
+        friends
       }
     }
   `;

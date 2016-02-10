@@ -2,7 +2,8 @@ import { Map, fromJS } from 'immutable'
 
 const defaultState = fromJS({
   posts: [],
-  user_list: []
+  user_list: [],
+  friends: []
 })
 
 function replacePost(newPost, state) {
