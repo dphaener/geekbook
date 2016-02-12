@@ -1,6 +1,6 @@
 import { post, runQuery } from '~/app/services/fetch_service'
 
-const post_fields = 'content, id, likes, user_likes, first_name, last_name'
+const post_fields = 'timestamp, content, id, likes, user_likes, first_name, last_name'
 
 export function updateFormValue(name, value) {
   return {

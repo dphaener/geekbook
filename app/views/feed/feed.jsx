@@ -3,6 +3,7 @@ import { post } from '~/app/services/fetch_service'
 import jwt from 'jsonwebtoken'
 import { fetchPosts, createPost } from '~/app/actions'
 import { connect } from 'react-redux'
+import ReactList from 'react-list'
 import FeedPost from './feed_post';
 import NewPost from '~/app/views/posts/new_post'
 import UserList from '~/app/views/users/list'
@@ -35,6 +36,15 @@ export class Feed extends Component {
     this.props.createPost({ user_id, content })
   }
 
+  renderPost(index, key) {
+    let post = this.props.posts[index]
+    return (
+      <div key={post.id}>
+        <FeedPost user_id={this.state.userId} key={post.id} {...post} />
+      </div>
+    )
+  }
+
   render() {
     const { posts, user_list } = this.props
 
@@ -42,7 +52,14 @@ export class Feed extends Component {
       <div className='feed-container'>
         <div className='feed'>
           <NewPost createPost={::this.createPost} />
-          { posts.map(post => <FeedPost user_id={this.state.userId} key={post.id} {...post}/>)}
+          <br />
+          <div style={{ maxHeight: '325px', overflow: 'auto' }}>
+            <ReactList
+              itemRenderer={::this.renderPost}
+              length={posts.length}
+              type='variable'
+            />
+          </div>
         </div>
         <UserList user_list={user_list} />
       </div>

@@ -6,7 +6,7 @@ import User from './user'
 
 export default function UserList({user_list}) {
   return (
-    <div className='user-list'>
+    <div className='user-list' style={{ height: '450px' }}>
       { user_list.map(user => <User key={user.token} {...user} />) }
     </div>
   )

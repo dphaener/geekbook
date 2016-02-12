@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {removeLike, addLike} from '~/app/actions'
 
-export function FeedPost({first_name, last_name, user_id, user_likes, content, likes, addLike, removeLike}) {
+export function FeedPost({timestamp, first_name, last_name, user_id, user_likes, content, likes, addLike, removeLike}) {
   return (
     <div className='post'>
-      <p>{first_name} {last_name}</p>
+      <p>{first_name} {last_name} - {timestamp}</p>
       <p>{content}</p>
       <span>{likes}</span>
       { user_likes.includes(user_id) ?
