@@ -36,7 +36,7 @@ export class Feed extends Component {
   }
 
   render() {
-    const { posts, user_list, friends } = this.props
+    const { posts, user_list } = this.props
 
     return (
       <div className='feed-container'>
@@ -44,7 +44,7 @@ export class Feed extends Component {
           <NewPost createPost={::this.createPost} />
           { posts.map(post => <FeedPost user_id={this.state.userId} key={post.id} {...post}/>)}
         </div>
-        <UserList user_list={user_list} friends={friends} />
+        <UserList user_list={user_list} />
       </div>
     )
   }

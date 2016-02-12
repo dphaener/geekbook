@@ -44,6 +44,12 @@ export default (state = defaultState, action) => {
     case 'removeLike':
       let unlikedPost = fromJS(action.result.data.unlikePost)
       return replacePost(unlikedPost, state)
+    case 'friendUser':
+      let newFriends = fromJS(action.result.data.addFriend.friends)
+      return state.setIn(['friends'], newFriends)
+    case 'unfriendUser':
+      let oldFriends = fromJS(action.result.data.removeFriend.friends)
+      return state.setIn(['friends'], oldFriends)
     default:
       return state
   }

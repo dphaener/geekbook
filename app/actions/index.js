@@ -1,6 +1,6 @@
 import { post, runQuery } from '~/app/services/fetch_service'
 
-const post_fields = 'content, id, likes, user_likes'
+const post_fields = 'content, id, likes, user_likes, first_name, last_name'
 
 export function updateFormValue(name, value) {
   return {
@@ -41,7 +41,8 @@ export function fetchPosts({user}) {
           token
         },
         posts(first: 10) { ${post_fields} },
-        friends
+        friends,
+        token
       }
     }
   `;
@@ -94,6 +95,34 @@ export function createPost({user_id, content}) {
   `
   return {
     type: 'createPost',
+    promise: runQuery({query})
+  }
+}
+
+export function friendUser({liker_id, likee_id}) {
+  let query = `
+    mutation {
+      addFriend(likee_id: "${likee_id}", liker_id: "${liker_id}") {
+        friends
+      }
+    }
+  `
+  return {
+    type: 'friendUser',
+    promise: runQuery({query})
+  }
+}
+
+export function unfriendUser({liker_id, likee_id}) {
+  let query = `
+    mutation {
+      removeFriend(likee_id: "${likee_id}", liker_id: "${liker_id}") {
+        friends
+      }
+    }
+  `
+  return {
+    type: 'unfriendUser',
     promise: runQuery({query})
   }
 }
