@@ -46,10 +46,18 @@ export default (state = defaultState, action) => {
       return replacePost(unlikedPost, state)
     case 'friendUser':
       let newFriends = fromJS(action.result.data.addFriend.friends)
-      return state.setIn(['friends'], newFriends)
+      let newPosts = fromJS(action.result.data.addFriend.posts)
+      return state.withMutations(map => {
+        map.set('friends', newFriends).
+          set('posts', newPosts)
+      })
     case 'unfriendUser':
       let oldFriends = fromJS(action.result.data.removeFriend.friends)
-      return state.setIn(['friends'], oldFriends)
+      let oldPosts = fromJS(action.result.data.removeFriend.posts)
+      return state.withMutations(map => {
+        map.set('friends', oldFriends).
+          set('posts', oldPosts)
+      })
     default:
       return state
   }

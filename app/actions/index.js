@@ -103,7 +103,10 @@ export function friendUser({liker_id, likee_id}) {
   let query = `
     mutation {
       addFriend(likee_id: "${likee_id}", liker_id: "${liker_id}") {
-        friends
+        friends,
+        posts(first: 10) {
+          ${post_fields}
+        }
       }
     }
   `
@@ -117,7 +120,10 @@ export function unfriendUser({liker_id, likee_id}) {
   let query = `
     mutation {
       removeFriend(likee_id: "${likee_id}", liker_id: "${liker_id}") {
-        friends
+        friends,
+        posts(first: 10) {
+          ${post_fields}
+        }
       }
     }
   `
