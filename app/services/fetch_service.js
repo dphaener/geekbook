@@ -5,8 +5,11 @@ const headers = {
   'Accept': '*/*'
 }
 
+const prodPrefix = 'https://geekbook-be.herokuapp.com'
+const devPrefix = 'http://geekbook-be.dev'
+
 export function post(url, body) {
-  return fetch(url, {
+  return fetch(`${devPrefix}${url}`, {
     method: 'POST',
     headers,
     body: JSON.stringify(body)
@@ -23,5 +26,5 @@ export function post(url, body) {
 }
 
 export function runQuery(body) {
-  return post('https://geekbook-be.herokuapp.com/queries', body)
+  return post('/queries', body)
 }

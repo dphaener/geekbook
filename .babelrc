@@ -4,6 +4,7 @@
     ['babel-plugin-module-alias', [
       { 'src': './', 'expose': '~' }
     ]],
-    'transform-decorators-legacy'
+    'transform-decorators-legacy',
+    'babel-relay-plugin-loader'
   ]
 }

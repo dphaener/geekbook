@@ -1,15 +1,22 @@
 // Vendor Libraries
 import React from 'react'
+import Relay from 'react-relay'
 import { render } from 'react-dom'
+import { RelayRouter } from 'react-router-relay'
 import { Router, IndexRoute, Route, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { syncHistory, routeReducer } from 'react-router-redux'
 import jwt from 'jsonwebtoken'
 
+// Update Network Layer
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('https://geekbook-be.herokuapp.com/queries')
+)
+
 // Components
 import Home from './home/home'
-import Feed from './feed/feed'
+import Feed, { FeedQueries } from './feed/feed'
 
 // Styles
 import '~/app/assets/styles/app'
@@ -62,10 +69,15 @@ class App extends React.Component {
 }
 
 render((
-  <Router history={browserHistory}>
+  <RelayRouter history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
-      <Route path="/:token" component={Feed} onEnter={authenticate} />
+      <Route
+        path="/:token"
+        component={Feed}
+        onEnter={authenticate}
+        queries={FeedQueries}
+      />
     </Route>
-  </Router>
+  </RelayRouter>
 ), document.getElementById('react'))

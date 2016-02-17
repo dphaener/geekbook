@@ -1,7 +1,5 @@
 import { post, runQuery } from '~/app/services/fetch_service'
 
-const post_fields = 'timestamp, content, id, likes, user_likes, first_name, last_name'
-
 export function updateFormValue(name, value) {
   return {
     type: 'updateFormValue',
@@ -14,7 +12,7 @@ export function createUser(email, first_name, last_name, password) {
   return {
     type: 'createUser',
     promise: post(
-      'https://geekbook-be.herokuapp.com/new_user',
+      '/new_user',
       { email, first_name, last_name, password }
     )
   }
@@ -24,7 +22,7 @@ export function loginUser(email, password) {
   return {
     type: 'loginUser',
     promise: post(
-      'https://geekbook-be.herokuapp.com/login',
+      '/login',
       { email, password }
     )
   }

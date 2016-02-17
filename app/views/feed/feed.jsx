@@ -1,18 +1,37 @@
 import React, { PropTypes, Component } from 'react'
+import Relay, { createContainer } from 'react-relay'
 import { post } from '~/app/services/fetch_service'
 import jwt from 'jsonwebtoken'
 import { fetchPosts, createPost } from '~/app/actions'
 import { connect } from 'react-redux'
 import ReactList from 'react-list'
-import FeedPost from './feed_post';
+
+import FeedPost from './feed_post'
 import NewPost from '~/app/views/posts/new_post'
 import UserList from '~/app/views/users/list'
 
+export const FeedQueries = {
+  user: () => Relay.QL`query { user(token: $token) }`
+}
+
 export class Feed extends Component {
   static propTypes = {
-    posts: PropTypes.array.isRequired,
-    user_list: PropTypes.array.isRequired,
-    friends: PropTypes.array.isRequired
+    user: PropTypes.object.isRequired
+  };
+
+  static fragments = {
+    user: () => Relay.QL`
+      fragment on User {
+        ${FeedPost.getFragment('user')},
+        posts(first: 10) {
+          edges {
+            node {
+              ${FeedPost.getFragment('post')}
+            }
+          }
+        }
+      }
+    `
   };
 
   constructor(props) {
@@ -37,16 +56,18 @@ export class Feed extends Component {
   }
 
   renderPost(index, key) {
-    let post = this.props.posts[index]
+    const { posts } = this.props.user,
+          post = posts.edges[index].node
+
     return (
-      <div key={post.id}>
-        <FeedPost user_id={this.state.userId} key={post.id} {...post} />
+      <div key={post.__dataID__}>
+        <FeedPost user={this.props.user} post={post} />
       </div>
     )
   }
 
   render() {
-    const { posts, user_list } = this.props
+    const { posts } = this.props.user
 
     return (
       <div className='feed-container'>
@@ -61,10 +82,9 @@ export class Feed extends Component {
             />
           </div>
         </div>
-        <UserList user_list={user_list} />
       </div>
     )
   }
 }
 
-export default connect(state => state.feed_posts.toJS(), {fetchPosts, createPost})(Feed);
+export default createContainer(Feed, { fragments: Feed.fragments })
