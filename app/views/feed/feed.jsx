@@ -6,10 +6,15 @@ import { fetchPosts, createPost } from '~/app/actions'
 import { connect } from 'react-redux'
 import ReactList from 'react-list'
 
+// Components
 import FeedPost from './feed_post'
 import NewPost from '~/app/views/posts/new_post'
 import UserList from '~/app/views/users/list'
 
+// Mutations
+import CreatePostMutation from '~/app/mutations/create_post_mutation'
+
+// Queries
 export const FeedQueries = {
   user: () => Relay.QL`query { user(token: $token) }`
 }
@@ -22,6 +27,7 @@ export class Feed extends Component {
   static fragments = {
     user: () => Relay.QL`
       fragment on User {
+        ${CreatePostMutation.getFragment('user')},
         ${FeedPost.getFragment('user')},
         posts(first: 10) {
           edges {
@@ -46,24 +52,20 @@ export class Feed extends Component {
     this.setState({ userId: user.user.token })
   }
 
-  componentDidMount() {
-    this.props.fetchPosts({user: this.state.userId})
-  }
-
   createPost(content) {
-    const user_id = this.state.userId
-    this.props.createPost({ user_id, content })
+    Relay.Store.commitUpdate(
+      new CreatePostMutation({ user: this.props.user, content })
+    )
   }
 
-  renderPost(index, key) {
-    const { posts } = this.props.user,
-          post = posts.edges[index].node
+  renderPosts() {
+    const { posts } = this.props.user
 
-    return (
-      <div key={post.__dataID__}>
-        <FeedPost user={this.props.user} post={post} />
+    return posts.edges.map(edge => (
+      <div key={edge.node.__dataID__}>
+        <FeedPost user={this.props.user} post={edge.node} />
       </div>
-    )
+    ))
   }
 
   render() {
@@ -75,11 +77,7 @@ export class Feed extends Component {
           <NewPost createPost={::this.createPost} />
           <br />
           <div style={{ maxHeight: '325px', overflow: 'auto' }}>
-            <ReactList
-              itemRenderer={::this.renderPost}
-              length={posts.length}
-              type='variable'
-            />
+            {::this.renderPosts()}
           </div>
         </div>
       </div>
