@@ -2,10 +2,14 @@ import React from 'react'
 import Relay, { createContainer } from 'react-relay'
 import { removeLike, addLike } from '~/app/actions'
 
+// Mutations
+import LikePostMutation from '~/app/mutations/like_post_mutation'
+
 class FeedPost extends React.Component {
   static fragments = {
     post: () => Relay.QL`
       fragment on Post {
+        ${LikePostMutation.getFragment('post')},
         first_name,
         last_name,
         timestamp,
@@ -16,10 +20,19 @@ class FeedPost extends React.Component {
     `,
     user: () => Relay.QL`
       fragment on User {
+        ${LikePostMutation.getFragment('user')},
         token
       }
     `
   };
+
+  addLike() {
+    const { user, post } = this.props
+
+    Relay.Store.commitUpdate(
+      new LikePostMutation({ user, post })
+    )
+  }
 
   render() {
     const { user, post } = this.props,
@@ -33,7 +46,7 @@ class FeedPost extends React.Component {
         <span>{likes}</span>
         { user_likes.includes(token) ?
           <button className="btn btn-default" onClick={removeLike}>Unlike</button> :
-        <button className="btn btn-default"  onClick={addLike}>Like</button> }
+        <button className="btn btn-default"  onClick={::this.addLike}>Like</button> }
       </div>
     )
   }

@@ -9,7 +9,7 @@ const prodPrefix = 'https://geekbook-be.herokuapp.com'
 const devPrefix = 'http://geekbook-be.dev'
 
 export function post(url, body) {
-  return fetch(`${devPrefix}${url}`, {
+  return fetch(`${prodPrefix}${url}`, {
     method: 'POST',
     headers,
     body: JSON.stringify(body)

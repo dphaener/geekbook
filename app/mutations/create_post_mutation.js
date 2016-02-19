@@ -24,7 +24,7 @@ export default class CreatePostMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on CreatePostPayload {
-        user { posts },
+        user,
         postEdge
       }
     `;
@@ -41,5 +41,14 @@ export default class CreatePostMutation extends Relay.Mutation {
         '': 'prepend'
       }
     }];
+  }
+
+  getOptimisticResponse() {
+    return {
+      user: this.props.user,
+      postEdge: {
+        content: this.props.content
+      }
+    }
   }
 }
