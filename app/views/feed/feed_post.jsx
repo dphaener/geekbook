@@ -1,6 +1,5 @@
 import React from 'react'
 import Relay, { createContainer } from 'react-relay'
-import { removeLike, addLike } from '~/app/actions'
 
 // Mutations
 import LikePostMutation from '~/app/mutations/like_post_mutation'

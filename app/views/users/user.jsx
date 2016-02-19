@@ -1,33 +1,54 @@
 import React from 'react'
+import Relay, { createContainer } from 'react-relay'
 import Gravatar from 'react-gravatar'
 import { connect } from 'react-redux'
-import { friendUser, unfriendUser } from '~/app/actions'
 
-function User({current_user_token, current_user_friends, token, email, first_name, last_name, friendUser, unfriendUser}) {
-  return (
-    <div>
-      <Gravatar email={email} />
-      <span>{first_name} {last_name}</span>
-      { current_user_friends.includes(token) ?
-        <button onClick={() => unfriendUser({liker_id: current_user_token, likee_id: token})} style={{ float: 'right' }}>Unfriend</button> :
-        <button onClick={() => friendUser({liker_id: current_user_token, likee_id: token})} style={{ float: 'right' }}>Friend</button>
+class User extends React.Component {
+  static propTypes = {
+    user: React.PropTypes.object.isRequired,
+    current_user: React.PropTypes.object.isRequired
+  };
+
+  static fragments = {
+    user: () => Relay.QL`
+      fragment on User {
+        token,
+        email,
+        first_name,
+        last_name
       }
-    </div>
-  )
-}
+    `,
+    current_user: () => Relay.QL`
+      fragment on User {
+        token,
+        friends
+      }
+    `
+  };
 
-function mapStateToProps(state) {
-  let { token, friends } = state.feed_posts.toJS()
+  unfriendUser() {
 
-  return {
-    current_user_token: token,
-    current_user_friends: friends
+  }
+
+  friendUser() {
+
+  }
+
+  render() {
+    const { email, first_name, last_name, token } = this.props.user,
+          { friends: current_user_friends, token: current_user_token } = this.props.current_user
+
+    return (
+      <div>
+        <Gravatar email={email} />
+        <span>{first_name} {last_name}</span>
+        { current_user_friends.includes(token) ?
+          <button onClick={::this.unfriendUser} style={{ float: 'right' }}>Unfriend</button> :
+          <button onClick={::this.friendUser} style={{ float: 'right' }}>Friend</button>
+        }
+      </div>
+    )
   }
 }
 
-export default connect(mapStateToProps, (dispatch) => {
-  return {
-    friendUser: ({liker_id, likee_id}) => dispatch(friendUser({liker_id, likee_id})),
-    unfriendUser: ({liker_id, likee_id}) => dispatch(unfriendUser({liker_id, likee_id}))
-  }
-})(User)
+export default createContainer(User, { fragments: User.fragments })

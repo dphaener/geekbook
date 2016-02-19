@@ -10,7 +10,9 @@ export default class LikePostMutation extends Relay.Mutation {
     `,
     post: () => Relay.QL`
       fragment on Post {
-        id
+        id,
+        user_likes,
+        likes
       }
     `
   };
@@ -30,7 +32,10 @@ export default class LikePostMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on LikePostPayload {
         user,
-        post
+        post {
+          user_likes,
+          likes
+        }
       }
     `;
   }
@@ -43,5 +48,15 @@ export default class LikePostMutation extends Relay.Mutation {
         user: this.props.user.id
       }
     }];
+  }
+
+  getOptimisticResponse() {
+    return {
+      post: {
+        id: this.props.post.id,
+        user_likes: this.props.post.user_likes.concat(this.props.user.token),
+        likes: this.props.post.likes + 1
+      }
+    }
   }
 }

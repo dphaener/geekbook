@@ -29,6 +29,7 @@ export class Feed extends Component {
       fragment on User {
         ${CreatePostMutation.getFragment('user')},
         ${FeedPost.getFragment('user')},
+        ${UserList.getFragment('user')},
         posts(first: 10) {
           edges {
             node {
@@ -69,7 +70,8 @@ export class Feed extends Component {
   }
 
   render() {
-    const { posts } = this.props.user
+    const { user } = this.props,
+          { posts } = user
 
     return (
       <div className='feed-container'>
@@ -80,6 +82,7 @@ export class Feed extends Component {
             {::this.renderPosts()}
           </div>
         </div>
+        <UserList user={user} />
       </div>
     )
   }
